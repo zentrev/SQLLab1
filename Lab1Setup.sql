@@ -90,6 +90,8 @@ Go
 
 Use AP
 
+drop table area
+
 bulk insert area from 'c:\temp\ap\ap.area' with (firstrow = 2)
 bulk insert [Current] from 'c:\temp\ap\ap.Current' with (firstrow = 2)
 bulk insert HouseholdFuels from 'c:\temp\ap\ap.HouseholdFules' with (firstrow = 2)
