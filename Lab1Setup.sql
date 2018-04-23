@@ -92,7 +92,7 @@ Use AP
 
 bulk insert area from 'c:\temp\ap\ap.area' with (firstrow = 2)
 bulk insert [Current] from 'c:\temp\ap\ap.Current' with (firstrow = 2)
-bulk insert HouseholdFulls from 'c:\temp\ap\ap.HouseholdFules' with (firstrow = 2)
+bulk insert HouseholdFuels from 'c:\temp\ap\ap.HouseholdFules' with (firstrow = 2)
 bulk insert Gasoline from 'c:\temp\ap\ap.Gasoline' with (firstrow = 2)
 bulk insert Food from 'c:\temp\ap\ap.Food' with (firstrow = 2)
 bulk insert footnote from 'c:\temp\ap\ap.footnote' with (firstrow = 2)
