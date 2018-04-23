@@ -1,0 +1,246 @@
+/******************** Lab 1 ******************************************
+
+Work in your Lab 1 groups.  One group submission for the group portion, individual submissions for the 
+individual portion.
+
+Your team scripts should be identical except for 7.X and 8.X.
+
+Unless specified otherwise, use as many separate queries as you need in your responses.
+
+All questions require SQL responses except those marked "ENGLISH".
+
+The data for this lab is available from the US Bureau of Labor Statistics, and is freely available
+here: http://download.bls.gov/pub/time.series/ap/.  Contained in that directory is a documentation 
+file named ap.txt which describes the nature of the data.
+
+***********************************************************************/
+
+
+---------------------- SETUP -----------------------------
+
+/* 0.0
+(No SQL to show here, just install the DB and load the data)
+Download and review all the files from http://download.bls.gov/pub/time.series/ap/
+The APSetup.sql script creates the AP database and adds the necessary tables.  Edit 
+the end of the script to insert all the AP data files except ap.txt and ap.contacts,
+and ensure each table has a primary key.
+*/
+
+
+------------------------------------------------------------------------
+----------------Group Portion-------------------------------------------
+------------------------------------------------------------------------
+
+---------------------- QUESTIONS -----------------------------
+/* 1.1 
+ENGLISH: 
+What does AP stand for? Hint: Read the documentation in ap.txt, and "average price" or "the series" is not specific
+enough.  What will you tell a non-technical person this database contains?
+*/
+
+
+/* 2.1
+Look at the Series table.  Area_code references rows in Area, item_code references
+rows in items, and likewise with the two period columns.  
+
+Write single query that returns all the rows and columns from 
+Series plus the matching rows, if any, for the above columns from their source tables.
+
+Include all the rows from series, regardless of a matching row in any other table.
+
+*/
+
+
+
+/* 2.2
+Your query above will probably be useful in the future.  Create a view
+called SeriesDescription based on that query.  Be explicit with your 
+column names (do not use *), and do not duplicate columns in the view.
+
+For help in creating and using views, see the Ben-Gan book, pg 169-171.
+
+A view stores a _query_, not the query result, and lets you write
+
+Select *
+From <whatever your view is called> 
+Where...
+
+to simplify and shorten future queries.
+*/
+
+
+/* 3.1
+Use your new view to return the descriptions for series APU0000702212.
+*/
+
+
+/* 3.2
+Join your SeriesDescription view to Food and filter to seriesid APU0000702212,
+Order the results chronologically.
+*/
+
+
+
+/*
+3.3 ENGLISH
+What does the value column represent in the result of 3.2 for series_id APU0000702212?
+Be specific in your response ("price" is not good enough).
+*/
+
+
+
+/* 3.4
+Using the food table, return the prices for series APU0000702212 for each April, sorted
+in reverse chronological order.
+*/
+
+
+
+
+
+/* 4.1
+Did you notice Food, Gasoline, and HouseholdFuels all have the same structure?
+Having these records split between different tables is like putting appointments
+for different days of the week in separate tables. Let's fix it.
+
+Create an AllProducts table to meet the following requirements.  The new table must:
+	a. Not lose any information found in the old tables
+	b. Improve any mis-typed data (think: should month and year really be split into two columns?)
+	c. Include the source table for each record, so that returning to the 
+		old format will be possible with a where clause like this:
+			Select *
+			From AllProducts
+			Where SourceTable = 'Gasoline'
+
+			Hint: Remember that you can hard code a string in the select, like Select 'test', * From ATable
+
+	d. Ensure the AllProducts table has a suitable primary key and foreign keys to any
+		related code tables (but not to the Food, Gasoline, and Household fuel tables)
+*/
+
+
+/* 4.2
+Populate the AllProducts table with all the data from 
+the gasoline, food, and householdfuels tables.  Use appropriate techniques to 
+convert the data in those source tables to the format required by the 
+AllProducts table.  
+
+Use a _single_ query for your insert.
+
+See the Union operator, Ben-Gan page 192.  In a union, multiple selects act as one larger query.
+
+*/
+
+
+
+
+
+/* 4.3
+Remove the Food, Gasoline, and HouseholdFuels tables from the database.
+(Remove the tables, not just their rows)
+*/
+
+
+
+/* 4.4
+
+(No answer required. UI tools are fine here)
+
+Ensure that all tables in AP have primary keys, and that foreign keys exist to constrain
+and show relationships.  You can ignore the footnotes table as it has 0 rows.
+
+You'll submit a database diagram image with your lab submission.
+*/
+
+
+/* 4.5 ENGLISH
+So... that was a lot of work.  Why bother?  Why create one new table and remove the three old ones?  Explain
+when starting from scratch on a new project how you will decide what data belongs in the same 
+table and what should be stored in different tables.
+*/
+
+
+
+
+
+
+/* 5.1
+Return the records in period that are not used in the AllProducts table.
+
+(Aren't you glad we have an all products table?  Think of how much more of a pain
+this query would have been if the data was still split across 3 tables)
+
+*/
+
+
+/* 5.2
+Return the records in AllProducts that have a period that doesn't exist
+in the period table
+*/
+
+
+/* 5.3 ENGLISH
+Explain how a foreign key acts on the Primary and Foreign Key tables.  Which table
+can have values not found in the other table?  Which table(s) is/are modified to receive
+the constraint?
+*/
+
+
+
+
+/* 6.1
+Return the top 100 products that had the largest month-to-month change in price as 
+a percent (p2 - p1)/p1.
+*/
+
+
+/* 6.2 ENGLISH
+How did you handle division by 0?  Are the zeros good data, or bad?  Justify your decision.
+*/
+
+
+/* 6.3 ENGLISH
+What food items tend to have the largest price changes?  (SQL is OK here, but I want you to explain
+the result in English).
+*/
+
+
+/* 6.4 ENGLISH
+Records from HouseholdFuels show up a lot in the top 15 records with the largest price changes.
+Look at the item name for each.  Is there any other explanation other than there were a lot 
+of months with large price changes that make HouseholdFuels appear so many times in the top 15?
+Justify your response.
+*/
+
+
+
+------------------------------------------------------------------------
+----------------Individual Portion-------------------------------------------
+------------------------------------------------------------------------
+
+
+/* Submit the following questions individually in the Lab 1 - Individual portion.  Do not 
+work in your groups on these questions.  All answers here must be your own work.  */
+
+/* 7.1
+SQL & ENGLISH: 
+
+Find something else interesting in this database by describing your intent in English and 
+extracting the data with queries. 
+
+Dig a little bit... a single query with a simple where clause is not what I'm looking for.
+Get curious, use as many queries as you'd like, and explain what you looked for and what you found
+in English.
+
+Completely optional: Can you find anything outside the database (like 6.5) that correlates
+to what you found in the data?
+*/
+
+
+
+
+/* 8.1
+ENGLISH: 
+
+What features of this database were easy to use?  Hard to use?
+*/

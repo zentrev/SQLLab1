@@ -1,0 +1,100 @@
+Use Master
+
+Create database AP
+Go
+
+USE [AP]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[series](
+	[series_id] [varchar](17) NULL,
+	[area_code] [varchar](4) NULL,
+	[item_code] [varchar](9) NULL,
+	[series_title] varchar(200) NULL,
+	[footnote_codes] [varchar](10) NULL,
+	[begin_year] [smallint] NULL,
+	[begin_period] [varchar](3) NULL,
+	[end_year] [smallint] NULL,
+	[end_period] [varchar](3) NULL
+) 
+
+CREATE TABLE [dbo].[period](
+	[period] [varchar](3) NULL,
+	[period_abbr] [varchar](5) NULL,
+	[period_name] [varchar](14) NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[item](
+	[item_code] [varchar](9) NULL,
+	[item_name] [varchar](89) NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[HouseholdFuels](
+	[series_id] [varchar](17) NULL,
+	[year] [smallint] NULL,
+	[period] [varchar](3) NULL,
+	[value] [varchar](50) NULL,
+	[footnote_codes] [varchar](10) NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[Gasoline](
+	[series_id] [varchar](17) NULL,
+	[year] [smallint] NULL,
+	[period] [varchar](3) NULL,
+	[value] [varchar](50) NULL,
+	[footnote_codes] [varchar](10) NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[footnote](
+	[footnote_code] [varchar](10) NULL,
+	[footnote_text] [varchar](50) NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[Food](
+	[series_id] [varchar](50) NULL,
+	[year] [varchar](50) NULL,
+	[period] [varchar](50) NULL,
+	[value] [varchar](50) NULL,
+	[footnote_codes] [varchar](50) NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[Current](
+	[series_id] [varchar](17) NULL,
+	[year] [smallint] NULL,
+	[period] [varchar](3) NULL,
+	[value] [varchar](50) NULL,
+	[footnote_codes] [varchar](10) NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[area](
+	[area_code] [varchar](4) NULL,
+	[area_name] [varchar](300) NULL
+) ON [PRIMARY]
+Go
+
+
+
+
+--follow this pattern to insert the data from the remaining files
+--from http://download.bls.gov/pub/time.series/ap/.  Import all tables
+--except ap.contacts and ap.txt.
+
+
+--bulk insert period from 'c:\ap\ap.period' with (firstrow = 2)
+
+Use AP
+
+bulk insert area from 'c:\temp\ap\ap.area' with (firstrow = 2)
+
+
+select *
+From area
+
+Select distinct area_code
+From area
