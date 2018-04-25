@@ -1,5 +1,7 @@
 Use Master
 
+Drop database AP
+
 Create database AP
 Go
 
@@ -90,7 +92,6 @@ Go
 
 Use AP
 
-drop table area
 
 bulk insert area from 'c:\temp\ap\ap.area' with (firstrow = 2)
 bulk insert [Current] from 'c:\temp\ap\ap.Current' with (firstrow = 2)
@@ -102,7 +103,30 @@ bulk insert item from 'c:\temp\ap\ap.item' with (firstrow = 2)
 bulk insert [period] from 'c:\temp\ap\ap.period' with (firstrow = 2)
 bulk insert series from 'c:\temp\ap\ap.series' with (firstrow = 2)
 
+ALTER TABLE area ALTER COLUMN area_code varchar(4) not NULL
 
+ALTER TABLE area 
+ADD Primary key (area_code)
+
+ALTER TABLE footnote ALTER COLUMN footnote_code varchar(10) not NULL
+
+ALTER TABLE footnote 
+ADD Primary key (footnote_code)
+
+ALTER TABLE item ALTER COLUMN item_code varchar(9) not NULL
+
+ALTER TABLE item 
+ADD Primary key (item_code)
+
+ALTER TABLE series ALTER COLUMN series_id varchar(17) not NULL
+
+ALTER TABLE series 
+ADD Primary key (series_id)
+
+ALTER TABLE period ALTER COLUMN period varchar(3) not NULL
+
+ALTER TABLE period 
+ADD Primary key (period)
 
 
 
