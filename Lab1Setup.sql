@@ -130,6 +130,8 @@ ADD Primary key (period)
 
 
 
+
+
 select *
 From area
 
