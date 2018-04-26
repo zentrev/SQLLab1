@@ -37,7 +37,9 @@ ENGLISH:
 What does AP stand for? Hint: Read the documentation in ap.txt, and "average price" or "the series" is not specific
 enough.  What will you tell a non-technical person this database contains?
 */
-
+-- Average Price
+-- This is a database for the Average Prices of household items and appliences calculated over a months time
+-- Such items include Motor fuels, Electricity, food items, etc.
 
 /* 2.1
 Look at the Series table.  Area_code references rows in Area, item_code references
@@ -49,7 +51,17 @@ Series plus the matching rows, if any, for the above columns from their source t
 Include all the rows from series, regardless of a matching row in any other table.
 
 */
+Use AP
 
+Select s.item_code, *
+From series s, area a, item i
+Where s.area_code = a.area_code
+And s.item_code = i.item_code
+
+Select *
+From series
+
+Select * from item
 
 
 /* 2.2
@@ -67,18 +79,28 @@ Where...
 
 to simplify and shorten future queries.
 */
+Create View SeriesDescription As 
+Select s.series_id as 'SeriesID', s.area_code as 'SeriesAreaCode', s.item_code 'SeriesItemCode', a.area_code as 'AreaCode', i.item_code 'ItemCode'
+From series s, area a, item i
+Where s.area_code = a.area_code
+And s.item_code = i.item_code
 
 
 /* 3.1
 Use your new view to return the descriptions for series APU0000702212.
 */
-
+Select *
+From SeriesDescription
+Where SeriesDescription.SeriesID = 'APU0000702212'
 
 /* 3.2
 Join your SeriesDescription view to Food and filter to seriesid APU0000702212,
 Order the results chronologically.
 */
-
+Select *
+From SeriesDescription s
+	Join Food f
+	On s.SeriesID = f.series_id
 
 
 /*
