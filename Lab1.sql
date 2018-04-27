@@ -101,6 +101,7 @@ Select *
 From SeriesDescription s
 	Join Food f
 	On s.SeriesID = f.series_id
+	where s.SeriesID = 'APU0000702212'
 
 
 /*
@@ -116,6 +117,11 @@ Using the food table, return the prices for series APU0000702212 for each April,
 in reverse chronological order.
 */
 
+Select *
+From food
+Where Series_ID = 'APU0000702212'
+and SUBSTRING(period,2,2) = 04
+order by year DESC
 
 
 
