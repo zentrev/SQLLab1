@@ -170,6 +170,7 @@ From HouseholdFuels
 
 select *
 From AllProducts
+order by Date
 
 
 
