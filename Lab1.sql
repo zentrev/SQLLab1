@@ -151,20 +151,21 @@ Create Table AllProducts (
 	Date datetime,
 	value varchar(50),
 	foornote_codes varchar(50),
-	Type varchar(50)
+	SourceTable varchar(50)
 	)
+	go
 
 Insert into Allproducts
 Select series_id,cast(year +'-' + substring(period,2,2) + '-15' as datetime) as Date,
-	value, footnote_codes, Type = 'Food'
+	value, footnote_codes, SourceTable = 'Food'
 From  food
 Union
 Select series_id,cast(year +'-' + substring(period,2,2) + '-15' as datetime) as Date,
-	value, footnote_codes, Type = 'Gasoline'
+	value, footnote_codes, SourceTable = 'Gasoline'
 From Gasoline
 Union 
 Select series_id,cast(year +'-' + substring(period,2,2) + '-15' as datetime) as Date,
-	value, footnote_codes, Type = 'HouseholdFules'
+	value, footnote_codes, SourceTable = 'HouseholdFules'
 From HouseholdFuels
 
 select *
