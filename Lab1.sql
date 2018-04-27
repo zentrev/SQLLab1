@@ -146,6 +146,31 @@ Create an AllProducts table to meet the following requirements.  The new table m
 		related code tables (but not to the Food, Gasoline, and Household fuel tables)
 */
 
+Create Table AllProducts (
+	series_id varchar(50),
+	Date datetime,
+	value varchar(50),
+	foornote_codes varchar(50),
+	Type varchar(50)
+	)
+
+Insert into Allproducts
+Select series_id,cast(year +'-' + substring(period,2,2) + '-15' as datetime) as Date,
+	value, footnote_codes, Type = 'Food'
+From  food
+Union
+Select series_id,cast(year +'-' + substring(period,2,2) + '-15' as datetime) as Date,
+	value, footnote_codes, Type = 'Gasoline'
+From Gasoline
+Union 
+Select series_id,cast(year +'-' + substring(period,2,2) + '-15' as datetime) as Date,
+	value, footnote_codes, Type = 'HouseholdFules'
+From HouseholdFuels
+
+select *
+From AllProducts
+
+
 
 /* 4.2
 Populate the AllProducts table with all the data from 
