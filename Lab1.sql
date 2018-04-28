@@ -146,8 +146,10 @@ Create an AllProducts table to meet the following requirements.  The new table m
 		related code tables (but not to the Food, Gasoline, and Household fuel tables)
 */
 
+drop table AllProducts
+
 Create Table AllProducts (
-	series_id varchar(50),
+	series_id varchar(17),
 	Date datetime,
 	value varchar(50),
 	foornote_codes varchar(50),
@@ -155,23 +157,17 @@ Create Table AllProducts (
 	)
 	go
 
-Insert into Allproducts
-Select series_id,cast(year +'-' + substring(period,2,2) + '-15' as datetime) as Date,
-	value, footnote_codes, SourceTable = 'Food'
-From  food
-Union
-Select series_id,cast(year +'-' + substring(period,2,2) + '-15' as datetime) as Date,
-	value, footnote_codes, SourceTable = 'Gasoline'
-From Gasoline
-Union 
-Select series_id,cast(year +'-' + substring(period,2,2) + '-15' as datetime) as Date,
-	value, footnote_codes, SourceTable = 'HouseholdFules'
-From HouseholdFuels
+
 
 select *
 From AllProducts
-order by Date
+Where SourceTable = 'Gasoline'
 
+ALTER TABLE Allproducts
+ADD FOREIGN KEY (series_id) REFERENCES series(series_id);
+
+ALTER TABLE Allproducts
+ADD PRIMARY KEY (Product_id);
 
 
 /* 4.2
@@ -186,14 +182,34 @@ See the Union operator, Ben-Gan page 192.  In a union, multiple selects act as o
 
 */
 
+Insert into Allproducts
+Select series_id,cast(year +'-' + substring(period,2,2) + '-15' as datetime) as Date,
+	value, footnote_codes, SourceTable = 'Food'
+From  food
+Union
+Select series_id,cast(year +'-' + substring(period,2,2) + '-15' as datetime) as Date,
+	value, footnote_codes, SourceTable = 'Gasoline'
+From Gasoline
+Union 
+Select series_id,cast(year +'-' + substring(period,2,2) + '-15' as datetime) as Date,
+	value, footnote_codes, SourceTable = 'HouseholdFules'
+From HouseholdFuels
 
 
-
+ALTER TABLE Allproducts ADD Product_id int identity(1,1) not null
+GO
+ALTER TABLE Allproducts
+add CONSTRAINT Product_id primary key(Product_id)
+GO
 
 /* 4.3
 Remove the Food, Gasoline, and HouseholdFuels tables from the database.
 (Remove the tables, not just their rows)
 */
+
+drop table food
+drop table gasoline
+drop table HouseholdFuels
 
 
 
@@ -217,15 +233,19 @@ table and what should be stored in different tables.
 
 
 
-
-
 /* 5.1
 Return the records in period that are not used in the AllProducts table.
+
 
 (Aren't you glad we have an all products table?  Think of how much more of a pain
 this query would have been if the data was still split across 3 tables)
 
 */
+
+select distinct *
+from period p left join AllProducts a
+on substring(p.period,2,2) = month(a.date)
+where a.date is null
 
 
 /* 5.2
