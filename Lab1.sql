@@ -253,6 +253,10 @@ Return the records in AllProducts that have a period that doesn't exist
 in the period table
 */
 
+select *
+From Allproducts a left join period p
+on month(a.date) = substring(p.period,2,2)
+where p.period is null
 
 /* 5.3 ENGLISH
 Explain how a foreign key acts on the Primary and Foreign Key tables.  Which table
@@ -267,6 +271,14 @@ the constraint?
 Return the top 100 products that had the largest month-to-month change in price as 
 a percent (p2 - p1)/p1.
 */
+
+select *
+from AllProducts p1 join AllProducts p2
+on p1.Date = p2.Date + 1
+
+
+
+
 
 
 /* 6.2 ENGLISH
