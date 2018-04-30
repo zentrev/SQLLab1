@@ -229,8 +229,11 @@ when starting from scratch on a new project how you will decide what data belong
 table and what should be stored in different tables.
 */
 
-
-
+--We moved all the data to one table becuse it was all relative to eachother. for us this makes sence but if we were more focused on the food and gas and the relation
+--between those perhapse merging the tables wouldent have been as good of an option.
+--With them merged we still have acsses to all the data we would need so haveing sepret tables is still reduntent
+--when first making the data base it can be alot easier to put all the data in more descriptive table, only to relize that is it redunt latter.
+--then uniting the tables would be a easy solution to that propblem
 
 /* 5.1
 Return the records in period that are not used in the AllProducts table.
@@ -277,16 +280,18 @@ from AllProducts
 
 
 
-select TOP 100 *, ((CAST(p2.value as float) - CAST(p1.value as float)) / NullIF(CAST(p1.value as float), 0)) * 100 as 'percent'
+select TOP 1000 *, ((CAST(p2.value as float) - CAST(p1.value as float)) / NullIF(CAST(p1.value as float), 0)) * 100 as 'percent'
 from AllProducts p1 join AllProducts p2
 on p1.Date = p2.Date + 1
 where p1.series_id = p2.series_id
 order by [percent] desc
 
+
 /* 6.2 ENGLISH
 How did you handle division by 0?  Are the zeros good data, or bad?  Justify your decision.
 */
 
+--We used NullIF to say if the value was 0 then set it to null. by seting it to null it allows the divistion to work by seting all imposible maths to null
 
 /* 6.3 ENGLISH
 What food items tend to have the largest price changes?  (SQL is OK here, but I want you to explain
