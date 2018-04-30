@@ -109,6 +109,7 @@ From SeriesDescription s
 What does the value column represent in the result of 3.2 for series_id APU0000702212?
 Be specific in your response ("price" is not good enough).
 */
+
 -- The average price of an individual item over the course of each month
 
 
@@ -280,7 +281,7 @@ from AllProducts
 
 
 
-select TOP 1000 *, ((CAST(p2.value as float) - CAST(p1.value as float)) / NullIF(CAST(p1.value as float), 0)) * 100 as 'percent'
+select TOP 100 *, ((CAST(p2.value as float) - CAST(p1.value as float)) / NullIF(CAST(p1.value as float), 0)) * 100 as 'percent'
 from AllProducts p1 join AllProducts p2
 on p1.Date = p2.Date + 1
 where p1.series_id = p2.series_id
@@ -297,7 +298,16 @@ How did you handle division by 0?  Are the zeros good data, or bad?  Justify you
 What food items tend to have the largest price changes?  (SQL is OK here, but I want you to explain
 the result in English).
 */
+select *
+from series
 
+use AP
+
+
+select s.series_title, f.value, *
+From series s, Food f
+Where s.series_id = f.series_id
+Order by f.value desc
 
 /* 6.4 ENGLISH
 Records from HouseholdFuels show up a lot in the top 15 records with the largest price changes.
