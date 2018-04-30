@@ -278,11 +278,9 @@ use AP
 select *
 from AllProducts
 
-
-
 select TOP 1000 *, ((CAST(p2.value as float) - CAST(p1.value as float)) / NullIF(CAST(p1.value as float), 0)) * 100 as 'percent'
 from AllProducts p1 join AllProducts p2
-on p1.Date = p2.Date + 1
+on p1.Date = dateadd(month, 1, p2.date)
 where p1.series_id = p2.series_id
 order by [percent] desc
 
@@ -297,6 +295,17 @@ How did you handle division by 0?  Are the zeros good data, or bad?  Justify you
 What food items tend to have the largest price changes?  (SQL is OK here, but I want you to explain
 the result in English).
 */
+select *
+from series s join (
+select TOP 100 p1.series_id, ((CAST(p2.value as float) - CAST(p1.value as float)) / NullIF(CAST(p1.value as float), 0)) * 100 as 'percent'
+from AllProducts p1 join AllProducts p2
+on p1.Date = dateadd(month, 1, p2.date)
+where p1.series_id = p2.series_id and p1.SourceTable = 'food'
+) broe
+on s.series_id = broe.series_id
+order by broe.[percent] desc
+
+--flour is lively
 
 
 /* 6.4 ENGLISH
