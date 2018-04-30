@@ -229,8 +229,11 @@ when starting from scratch on a new project how you will decide what data belong
 table and what should be stored in different tables.
 */
 
-
-
+--We moved all the data to one table becuse it was all relative to eachother. for us this makes sence but if we were more focused on the food and gas and the relation
+--between those perhapse merging the tables wouldent have been as good of an option.
+--With them merged we still have acsses to all the data we would need so haveing sepret tables is still reduntent
+--when first making the data base it can be alot easier to put all the data in more descriptive table, only to relize that is it redunt latter.
+--then uniting the tables would be a easy solution to that propblem
 
 /* 5.1
 Return the records in period that are not used in the AllProducts table.
