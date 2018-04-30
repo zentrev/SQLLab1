@@ -275,10 +275,13 @@ use AP
 select *
 from AllProducts
 
-select TOP 100 *, ((CAST(p2.value as float) - CAST(p1.value as float)) / CAST(p1.value as float)) * 100 as 'percent'
+
+
+select TOP 100 *, ((CAST(p2.value as float) - CAST(p1.value as float)) / NullIF(CAST(p1.value as float), 0)) * 100 as 'percent'
 from AllProducts p1 join AllProducts p2
 on p1.Date = p2.Date + 1
 where p1.series_id = p2.series_id
+order by [percent] desc
 
 /* 6.2 ENGLISH
 How did you handle division by 0?  Are the zeros good data, or bad?  Justify your decision.
