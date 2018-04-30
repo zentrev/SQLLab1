@@ -109,7 +109,7 @@ From SeriesDescription s
 What does the value column represent in the result of 3.2 for series_id APU0000702212?
 Be specific in your response ("price" is not good enough).
 */
-
+-- The average price of an individual item over the course of each month
 
 
 /* 3.4
