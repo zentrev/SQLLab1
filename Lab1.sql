@@ -280,7 +280,7 @@ from AllProducts
 
 select TOP 100 *, ((CAST(p2.value as float) - CAST(p1.value as float)) / NullIF(CAST(p1.value as float), 0)) * 100 as 'percent'
 from AllProducts p1 join AllProducts p2
-on p1.Date = dateadd(month, 1, p2.date)
+on p2.Date > dateadd(month, .5, p1.date) and p2.Date < dateadd(month, 1.5, p1.date)
 where p1.series_id = p2.series_id
 order by [percent] desc
 
