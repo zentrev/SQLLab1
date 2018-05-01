@@ -109,7 +109,6 @@ From SeriesDescription s
 What does the value column represent in the result of 3.2 for series_id APU0000702212?
 Be specific in your response ("price" is not good enough).
 */
-
 -- The average price of an individual item over the course of each month
 
 
@@ -279,14 +278,20 @@ use AP
 select *
 from AllProducts
 
+select TOP 100 *, ((CAST(p2.value as float) - CAST(p1.value as float)) / NullIF(CAST(p1.value as float), 0)) * 100 as 'percent'
+from AllProducts p1 join AllProducts p2
+on p1.Date = dateadd(month, 1, p2.date)
+where p1.series_id = p2.series_id
+order by [percent] desc
+
+
 
 
 select TOP 100 *, ((CAST(p2.value as float) - CAST(p1.value as float)) / NullIF(CAST(p1.value as float), 0)) * 100 as 'percent'
 from AllProducts p1 join AllProducts p2
-on p1.Date = p2.Date + 1
+on p1.Date = dateadd(month, 1, p2.date)
 where p1.series_id = p2.series_id
 order by [percent] desc
-
 
 /* 6.2 ENGLISH
 How did you handle division by 0?  Are the zeros good data, or bad?  Justify your decision.
@@ -299,15 +304,20 @@ What food items tend to have the largest price changes?  (SQL is OK here, but I 
 the result in English).
 */
 select *
-from series
+from series s join (
+select TOP 100 p1.series_id,((CAST(p2.value as float) - CAST(p1.value as float)) / NullIF(CAST(p1.value as float), 0)) * 100 as 'percent'
+from AllProducts p1 join AllProducts p2
+on p1.Date = dateadd(month, 1, p2.date)
+where p1.series_id = p2.series_id and p1.SourceTable = 'Food'
+) broe
+on s.series_id = broe.series_id
+order by broe.[percent] desc
+--flour is lively
 
-use AP
+select distinct SourceTable
+from AllProducts
 
 
-select s.series_title, f.value, *
-From series s, Food f
-Where s.series_id = f.series_id
-Order by f.value desc
 
 /* 6.4 ENGLISH
 Records from HouseholdFuels show up a lot in the top 15 records with the largest price changes.
@@ -315,7 +325,9 @@ Look at the item name for each.  Is there any other explanation other than there
 of months with large price changes that make HouseholdFuels appear so many times in the top 15?
 Justify your response.
 */
-
+-- First this is gasoline, a product that routinely changes its price
+-- In the item description, it also says that it is not seasonally adjusted
+-- This would mean that it takes into account all the factors that take part in the fluctuations of its price such as weather or seasonal events
 
 
 ------------------------------------------------------------------------
@@ -348,3 +360,4 @@ ENGLISH:
 
 What features of this database were easy to use?  Hard to use?
 */
+
