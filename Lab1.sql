@@ -265,8 +265,10 @@ Explain how a foreign key acts on the Primary and Foreign Key tables.  Which tab
 can have values not found in the other table?  Which table(s) is/are modified to receive
 the constraint?
 */
-
-
+-- A foreign key acts like a reference to the table its coming from (Child Table) onto another table (Parent Table)
+-- The child tables will be their own seperate tables that contain their own data (such as the Food and other product tables)
+-- While the Parent table (such as the series table) will contain id's and descriptions from every product (child tables) 
+-- The Parent tables will have to be modified in order to have the constraint so it keeps a reference of the table the foriegn key came from
 
 
 /* 6.1
@@ -351,7 +353,9 @@ in English.
 Completely optional: Can you find anything outside the database (like 6.5) that correlates
 to what you found in the data?
 */
-
+-- What is the highest of each 
+Select *
+From AllProducts
 
 
 
